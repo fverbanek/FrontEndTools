@@ -5,13 +5,10 @@ import Dropzone from "react-dropzone";
 import { DropContainer, UploadMessage } from "./styles";
 
 export default class Upload extends Component {
-  renderDragMessage = (isDragActive, isDragReject) => {
+  renderDragMessage = (isDragActive) => {
+
     if (!isDragActive) {
       return <UploadMessage> <FaCloudUploadAlt  color="#ddd" size={30}/>&nbsp; Arraste arquivos aqui...</UploadMessage>;
-    }
-
-    if (isDragReject) {
-      return <UploadMessage type="error">Arquivo não suportado</UploadMessage>;
     }
 
     return <UploadMessage type="success"> Solte os arquivos aqui</UploadMessage>;
@@ -21,15 +18,14 @@ export default class Upload extends Component {
     const { onUpload } = this.props;
 
     return (
-      <Dropzone  onDropAccepted={onUpload}>
+      <Dropzone  onDropAccepted={onUpload} accept='.pfx'>
         {({ getRootProps, getInputProps, isDragActive, isDragReject }) => (
           <DropContainer
             {...getRootProps()}
-            isDragActive={isDragActive}
-            isDragReject={isDragReject}
+            isDragActive={isDragActive}          
           >
             <input {...getInputProps()} />
-            {this.renderDragMessage(isDragActive, isDragReject)}
+            {this.renderDragMessage(isDragActive)}
           </DropContainer>
         )}
       </Dropzone>

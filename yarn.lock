@@ -1950,7 +1950,7 @@ atob@^2.1.1:
 
 attr-accept@^2.0.0:
   version "2.0.0"
-  resolved "http://npm.tecnospeed.local/attr-accept/-/attr-accept-2.0.0.tgz#8422fef5ee4a511c207796c888227ab5de03306f"
+  resolved "https://registry.yarnpkg.com/attr-accept/-/attr-accept-2.0.0.tgz#8422fef5ee4a511c207796c888227ab5de03306f"
   integrity sha512-I9SDP4Wvh2ItYYoafEg8hFpsBe96pfQ+eabceShXt3sw2fbIP96+Aoj9zZE0vkZNAkXXzHJATVRuWz+h9FxJxQ==
 
 autoprefixer@^9.6.1:

@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
 import {FaCloudUploadAlt, FaSignInAlt, FaCaretLeft} from 'react-icons/fa'
-import { Card, Form, Col, Row, Nav} from 'react-bootstrap';
+import { Card, Form, Col, Row} from 'react-bootstrap';
 import FormData from 'form-data'
 import axios from 'axios'
 import { toast}  from 'react-toastify'
 import { uniqueId } from "lodash"
 import filesize from "filesize"
 import Upload from '../../components/InputFile'
-import {Container, SubmitButton, ButtonUpload, TextResult, BackButton, NavLink} from './styles'
+import {Container, SubmitButton, NavHeader, TextResult, BackButton, NavLink} from './styles'
 
 export default class nfeDestinatario extends Component {
     state = {
-        certificado: false,
+        certificado: true,
         xmlEnvio: '',
         xmlRetorno: '',
         loading: false,
         password: 'speed051161',
-        uploadedFiles: ''
+        uploadedFiles: '',
+        uploadName: ''
     }
 
     handleSetCertificado = certificado =>{
@@ -39,6 +40,8 @@ export default class nfeDestinatario extends Component {
         let url
         e.preventDefault()
         const { certificado, xmlEnvio, xmlRetorno, uploadedFiles, password } = this.state
+        if(!xmlEnvio) return
+        
         this.setState({loading: true})
         try{
             const form = new FormData();
@@ -65,7 +68,6 @@ export default class nfeDestinatario extends Component {
                 'content-type': `multipart/form-data; boundary=${form._boundary}`,
               },
             });
-            console.log(response.data)
             this.setState({
                 xmlResult: response.data,
                 loading: false
@@ -97,15 +99,15 @@ export default class nfeDestinatario extends Component {
         }));
     
         this.setState({
-          uploadedFiles: uploaded[0].file
+          uploadedFiles: uploaded[0].file,
+          uploadName: uploaded[0].name
         });
 
 
-        console.log(uploaded)
     }
 
     render() {
-        const {certificado, xmlResult} = this.state
+        const {certificado, xmlResult, uploadName} = this.state
         
         return (
         <Container>
@@ -142,14 +144,10 @@ export default class nfeDestinatario extends Component {
 
                                         <Card>
                                         <Card.Header>
-                                            <Nav variant="tabs" defaultActiveKey="#first" style={{height: 40}}>
-                                                <Nav.Item >
-                                                    <NavLink onClick={() => this.handleSetCertificado(false)} >Utilizar xml retorno</NavLink>
-                                                </Nav.Item>
-                                                <Nav.Item>
-                                                    <NavLink onClick={() => this.handleSetCertificado(true)}>Certificado digital</NavLink>
-                                                </Nav.Item>
-                                            </Nav>
+                                            <NavHeader>
+                                                <NavLink onClick={() => this.handleSetCertificado(true)} checked={certificado}>Certificado digital</NavLink>
+                                                <NavLink onClick={() => this.handleSetCertificado(false)} checked={!certificado}>Utilizar xml retorno</NavLink>                                                                                                                                           
+                                            </NavHeader>   
                                         </Card.Header>
                                         { certificado ? 
                                         <Card.Body>
@@ -159,7 +157,8 @@ export default class nfeDestinatario extends Component {
                                             anexar o arquivo .pfx do certificado, para que possa ser realizado a consulta
                                             da  nota fiscal diretamente no webservice do Sefaz.
                                             </Card.Text>
-                                            <Upload onUpload={this.handleUpload} />                                           
+                                            <Upload onUpload={this.handleUpload} />
+                                            <strong>{uploadName}</strong>                                          
                                         </Card.Body>
                                         :
                                         <Card.Body>

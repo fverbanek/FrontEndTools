@@ -30,5 +30,5 @@ export const UploadMessage = styled.p`
   color: ${props => messageColors[props.type || "default"]};
   justify-content: center;
   align-items: center;
-  padding: 15px 0;
+  padding: 30px 0;
 `;

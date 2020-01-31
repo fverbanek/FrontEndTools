@@ -1,14 +1,30 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+
 `;
 
-export const NavLink = styled.a`
-    padding: 10px 5px 10px 5px;
+export const NavHeader = styled.div`
+    display: flex;
+    flex-direction: row;
+
+    @media only screen and (max-width: 1200px) {
+        flex-direction: column;
+    }
+`;
+
+export const NavLink = styled.button`
+    padding: 10px 30px 10px 30px;   
+    color:  ${props => ( props.checked ? '#fff' : '#000' )}; 
+    background: ${props => ( props.checked ? '#343a40' : '#eee' )};  
     margin-left: 20px;
-    background: #eee;    
+    margin-bottom: 10px;    
+    border: none;
     border-radius: 5px;
-    border: solid 1px '#000';
+    cursor:pointer;
+    &:hover{
+        opacity: 0.7;
+    }
 `;
 
 export const TextResult = styled.textarea`
